@@ -1,0 +1,73 @@
+/**********************************************************************************************************
+* @file    launch.json
+* @author  Sebastian Schmidt 3B Scientific
+* @brief   VS Code settings for debugging Zephyr projects
+***********************************************************************************************************/
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "Launch JLink",
+            "device": "${config:soc}",
+            "cwd": "${workspaceFolder}",
+            "executable": "build/zephyr/zephyr.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "jlink",
+            "gdbPath": "${config:sdk_path}/zephyr-sdk-${config:sdk_version}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+            "preLaunchTask": "Zephyr Build"
+        },
+        {
+            "name": "Attach JLink",
+            "device": "${config:soc}",
+            "cwd": "${workspaceFolder}",
+            "executable": "build/zephyr/zephyr.elf",
+            "request": "attach",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "jlink",
+            "gdbPath": "${config:sdk_path}/zephyr-sdk-${config:sdk_version}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb"
+        },
+        {
+            "name": "Launch ST Programmer",
+            "device": "${config:soc}",
+            "cwd": "${workspaceFolder}",
+            "executable": "build/zephyr/zephyr.elf",
+            "svdPath": "${config:svd_path}",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "stlink",
+            "gdbPath": "${config:sdk_path}/zephyr-sdk-${config:sdk_version}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+            "showDevDebugOutput": "both",
+            "serverArgs": [
+            "-l", "1",
+            "-m", "${config:stlink_port}",
+            "-k",
+            "-t","-s"
+            ],
+            "preLaunchTask": "Zephyr Build"
+        },
+        {
+            "name": "Attach ST Programmer",
+            "device": "${config:soc}",
+            "cwd": "${workspaceFolder}",
+            "executable": "build/zephyr/zephyr.elf",
+            "svdPath": "${config:svd_path}",
+            "request": "attach",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "stlink",
+            "gdbPath": "${config:sdk_path}/zephyr-sdk-${config:sdk_version}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+            "showDevDebugOutput": "both",
+            "serverArgs": [
+            "-l", "1",
+            "-m", "${config:stlink_port}",
+            "-k",
+            "-t","-s"
+            ],
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+/*************************************************************************************************************************
+* @file    settings.json
+* @brief   VS Code settings configuration for an Zephyr Workspace
+* @details This file contains the configuration settings for the VS Code environment used in an Zephyr Workspace.
+*          It includes settings for the board, application directory, SDK version, and various other configurations.
+*************************************************************************************************************************/
+{
+
+/*************************************************************************************************************************
+*                                                 USER ZEPHY SETTINGS
+*************************************************************************************************************************/
+
+  /* used Microcontroller */
+
+  // "soc": "nRF52840_xxAA",
+  // "board": "nrf52840dk/nrf52840",
+  
+  "soc": "stm32h503",
+  "board": "nucleo_h503rb",
+
+  /* path to the microcontroller SVD file  */
+  "svd_path": "${env:USERPROFILE}/Documents/svds/stm32h5/stm32h503.svd",
+
+  /* used port for debugging STM Microcontrollers */
+  // "stlink_port": "0",
+  "stlink_port": "1",
+
+  /*!SECTION used Zephyr SDK version and path */
+  "sdk_version": "0.16.9",
+  "sdk_path": "${env:USERPROFILE}/Zephyr-SDKs",
+
+  /* used application directory */
+  "app_dir": "app",
+
+/*************************************************************************************************************************
+*                                                 EXTENSIONS SETTINGS
+*************************************************************************************************************************/
+
+  "search.useIgnoreFiles": false,
+  "cmake.configureOnOpen": false,
+  
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+  "C_Cpp.default.compilerPath": "${sdk_path}/zephyr-sdk-${sdk_version}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc.exe",
+  "C_Cpp.default.intelliSenseMode": "gcc-arm",
+  "C_Cpp.default.cStandard": "c11",
+
+  "python.envFile": "${workspaceFolder}/.env",
+
+}

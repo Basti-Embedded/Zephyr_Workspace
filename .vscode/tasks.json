@@ -1,0 +1,235 @@
+/**********************************************************************************************************
+* @file    tasks.json
+* @author  Sebastian Schmidt 3B Scientific
+* @brief   VS Code tasks configuration for Zephyr projects
+* @details This file contains the configuration settings for the VS Code tasks used in Zephyr projects.
+***********************************************************************************************************/
+
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Zephyr Build",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "options": {
+                "env": {
+                    "ZEPHYR_SDK_INSTALL_DIR": "${config:sdk_path}/zephyr-sdk-${config:sdk_version}",
+                    "ZEPHYR_BASE": "${workspaceFolder}/../zephyr"
+                }
+            },
+            "args": [
+                "-m",
+                "west",
+                "build",
+                "-b",
+                "${config:board}",
+                "${config:app_dir}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Zephyr Build Pristine",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "options": {
+                "env": {
+                    "ZEPHYR_SDK_INSTALL_DIR": "${config:sdk_path}/zephyr-sdk-${config:sdk_version}",
+                    "ZEPHYR_BASE": "${workspaceFolder}/../zephyr"
+                }
+            },
+            "args": [
+                "-m",
+                "west",
+                "build",
+                "-p",
+                "-b",
+                "${config:board}",
+                "${config:app_dir}"
+            ],
+            "group": {
+                "kind": "build",
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Zephyr Flash",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "args": [
+                "-m",
+                "west",
+                "flash"
+            ],
+            "dependsOn": [
+                "Zephyr Build"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Zephyr Update Workspace",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "args": [
+                "-m",
+                "west",
+                "update"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Zephyr Init Workspace",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "init Python environment",
+                "West install",
+                "West init manifest",
+                "Zephyr Update Workspace",
+                "West Install Python Requirements"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Zephyr Clean Workspace",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "Remove-Item -Recurse -Force -ErrorAction SilentlyContinue '${workspaceFolder}/../.west', '${workspaceFolder}/build', '${workspaceFolder}/../modules', '${workspaceFolder}/../bootloader', '${workspaceFolder}/../zephyr', '${workspaceFolder}/../tools'"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Zephyr install SDK",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "args": [
+                "-m",
+                "west",
+                "sdk",
+                "install",
+                "-b",
+                "${config:sdk_path}",
+                "--version",
+                "${config:sdk_version}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Zephyr Search Board",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "args": [
+                "-m",
+                "west",
+                "boards",
+                "-n",
+                "${input:Board}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Zephyr Open Kconfig Menü",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "options": {
+                "env": {
+                    "ZEPHYR_SDK_INSTALL_DIR": "${config:sdk_path}/zephyr-sdk-${config:sdk_version}"
+                }
+            },
+            "args": [
+                "-m",
+                "west",
+                "build",
+                "-t",
+                "guiconfig"
+            ],
+            "problemMatcher": ["$gcc"]
+        },
+        {
+        "label": "Zephyr add Overlay",
+        "type": "shell",
+        "command": "powershell",
+        "args": [
+            "-NoProfile",
+            "-Command",
+            "New-Item -Path '${workspaceFolder}/${config:app_dir}/boards' -ItemType Directory -Force; New-Item -Path '${workspaceFolder}/${config:app_dir}/boards/${config:board}.overlay' -ItemType File -Force"
+        ],
+        "problemMatcher": []
+        },
+        {
+            "label": "West init manifest",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "args": [
+                "-m",
+                "west",
+                "init",
+                "--local"
+            ],
+            // "options": {
+                // "cwd": "${workspaceFolder}/${config:app_dir}"
+            // },
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "West Install Python Requirements",
+            "type": "shell",
+            "command": ".venv/Scripts/python.exe",
+            "args": [
+                "-m",
+                "pip",
+                "install",
+                "-r",
+                "${workspaceFolder}/../zephyr/scripts/requirements.txt"
+            ],
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "West install",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "args": [
+                "-m",
+                "pip",
+                "install",
+                "west"
+            ],
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "init Python environment",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "-m",
+                "venv",
+            ],
+            // "hide": true,
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "id": "Board",
+            "type": "promptString",
+            "description": "Enter board name to search for",
+            "default": ""
+        },
+        {
+            "id": "SDK Version",
+            "type": "promptString",
+            "description": "Enter SDK version to install",
+            "default": "0.16.9"
+        }
+    ]
+}
