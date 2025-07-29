@@ -1,0 +1,22 @@
+/**********************************************************************************************************
+* @file    extension.json
+* @author  Sebastian Schmidt 3B Scientific
+* @brief   VS Code extensions to run Zephyr projects
+* @details This file contains all recommended vs code extensions to run Zephyr projects.
+***********************************************************************************************************/
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-python-envs",
+
+        "ms-vscode.vscode-embedded-tools",
+        "marus25.cortex-debug",
+        "mcu-debug.rtos-views",
+        
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools",
+        
+        "trond-snekvik.kconfig-lang",
+        "redhat.vscode-yaml",
+    ]
+}
