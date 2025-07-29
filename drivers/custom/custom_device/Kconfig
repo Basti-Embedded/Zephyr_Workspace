@@ -1,0 +1,10 @@
+#******************************************************************************************
+# @file    Kconfig
+# @brief   Kconfig file for a custom out of tree driver driver class 
+# @spdx_license_identifier: Apache-2.0
+#******************************************************************************************
+
+config CUSTOM_DEVICE
+    bool "enable Custom Device"
+	help
+	  enable the custom device.

@@ -1,0 +1,28 @@
+#******************************************************************************************
+# @file    template.yaml
+# @brief   YAML file for a custom out of tree Devicetree binding
+# @spdx_license_identifier: Apache-2.0
+#******************************************************************************************/
+
+description: |
+  A template for a custom Devicetree binding. 
+
+compatible: "zephyr,template"
+
+include: base.yaml
+
+properties:
+  example-button:
+    type: phandle-array
+    required: true
+    description: example button that must be defined in the devicetree node.
+
+  example-property:
+    type: int
+    required: true
+    description: An example property that must be defined in the devicetree node.
+
+  optional-property:
+    type: string
+    description: An optional property that can be defined in the devicetree node.
+

@@ -1,0 +1,30 @@
+#******************************************************************************************
+# @file    Kconfig
+# @brief   Kconfig file for a custom out of tree driver driver class 
+# @spdx_license_identifier: Apache-2.0
+#******************************************************************************************
+
+menuconfig CUSTOM
+
+config CUSTOM
+	bool "enable Custom Driver Class"
+	help
+	  This option enables the custom driver class.
+
+if CUSTOM
+
+	config CUSTOM_INIT_PRIORITY
+		int "Custom device drivers init priority"
+		default KERNEL_INIT_PRIORITY_DEVICE
+		help
+		Custom drivers init priority.
+
+	config CUSTOM_LOG_LVL
+		int "Custom device drivers log level"
+		default LOG_LEVEL_INF
+		help
+		Custom drivers log level.
+		0 = None, 1 = Error, 2 = Warning, 3 = Info, 4 = Debug, 5 = Trace
+
+	rsource "custom_device/Kconfig"
+endif # CUSTOM
